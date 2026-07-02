@@ -13,6 +13,7 @@
   const SLIDE_INTERVAL = 10000;    // 10 seconds per slide
   const EMBER_COUNT = 45;          // number of ember particles
   const REVEAL_THRESHOLD = 0.15;   // IntersectionObserver threshold
+  const SCHEDULE_INTERVAL = 3000;  // 3 seconds per schedule item (mobile)
 
   // ---- DOM REFS ----
   const heroSection = document.getElementById('hero');
@@ -30,6 +31,42 @@
 
   let currentSlide = 0;
   let slideTimer = null;
+
+
+  /* =============================================
+     0. SCHEDULE BAR CYCLING (Mobile)
+     ============================================= */
+  const scheduleItems = document.querySelectorAll('.schedule-item');
+  let currentSchedule = 0;
+  let scheduleTimer = null;
+
+  function cycleSchedule() {
+    scheduleItems[currentSchedule].classList.remove('active');
+    currentSchedule = (currentSchedule + 1) % scheduleItems.length;
+    scheduleItems[currentSchedule].classList.add('active');
+  }
+
+  function initScheduleCycling() {
+    // Only cycle on mobile where items are stacked
+    if (window.innerWidth <= 680) {
+      if (!scheduleTimer) {
+        scheduleTimer = setInterval(cycleSchedule, SCHEDULE_INTERVAL);
+      }
+    } else {
+      // On desktop, show all — clear any timer
+      if (scheduleTimer) {
+        clearInterval(scheduleTimer);
+        scheduleTimer = null;
+      }
+      scheduleItems.forEach(item => item.classList.add('active'));
+    }
+  }
+
+  initScheduleCycling();
+  window.addEventListener('resize', () => {
+    clearTimeout(window._schedResize);
+    window._schedResize = setTimeout(initScheduleCycling, 200);
+  });
 
 
   /* =============================================

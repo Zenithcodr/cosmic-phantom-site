@@ -140,6 +140,138 @@ button {
 }
 
 
+/* ---- Schedule Announcement Bar ---- */
+.schedule-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9998;
+  background: linear-gradient(90deg, var(--bg-void), var(--bg-secondary), var(--bg-void));
+  border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+  padding: 0 24px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.schedule-bar-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: var(--container-max);
+}
+
+.schedule-label {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+.schedule-divider {
+  color: rgba(201, 168, 76, 0.3);
+  font-size: 0.75rem;
+}
+
+.schedule-items {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+}
+
+.schedule-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--text-ash);
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.schedule-item strong {
+  color: var(--text-bone);
+  font-weight: 600;
+}
+
+.schedule-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Push hero & body down for fixed bar */
+body {
+  padding-top: 42px;
+}
+
+.hero {
+  height: calc(100vh - 42px);
+  height: calc(100dvh - 42px);
+}
+
+/* Sticky CTA offset so it doesn't overlap */
+.sticky-cta {
+  bottom: 28px;
+}
+
+/* Mobile: cycle through items */
+@media (max-width: 680px) {
+  .schedule-divider {
+    display: none;
+  }
+
+  .schedule-items {
+    min-height: 20px;
+  }
+
+  .schedule-item {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+
+  .schedule-item.active {
+    position: relative;
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+@media (max-width: 420px) {
+  .schedule-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+  }
+
+  .schedule-bar {
+    height: 38px;
+    padding: 0 12px;
+  }
+
+  body {
+    padding-top: 38px;
+  }
+
+  .hero {
+    height: calc(100vh - 38px);
+    height: calc(100dvh - 38px);
+  }
+}
+
+
 /* ---- Utilities ---- */
 .container {
   max-width: var(--container-max);
